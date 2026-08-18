@@ -1,5 +1,6 @@
 name: sync-cask
 
+
 # Tracks foolgry/dsh-desktop releases and bumps the cask version + sha256.
 # Uses this repo's own GITHUB_TOKEN, so no PAT secret is needed.
 
