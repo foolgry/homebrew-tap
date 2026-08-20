@@ -1,6 +1,6 @@
 cask "dsh-desktop" do
-  version "0.1.0-rc.7.202608180530"
-  sha256 "881f3d2f1ef44e08d4e2abe496efa0c2bcca70729742a2ffadc4168a70cd78e8"
+  version "0.1.0-rc.8.202608200304"
+  sha256 "065a28bfbb242b27e56ba0840f7240eaa0261e86f062e4c510e733ac2a618a3f"
 
   url "https://github.com/foolgry/dsh-desktop/releases/download/v#{version}/DSH.Desktop-#{version}-mac-arm64.dmg"
   name "DSH Desktop"
