@@ -1,6 +1,6 @@
 cask "standup-reminder" do
   version "1.0"
-  sha256 "22a37502312f78775ea199b84acc817f8a9b7c11c9eca3895be81ea2f5d1d69f"
+  sha256 "7022f8210105c3347088143ec809a04304e2ee5c87cf78b45eea2a8d0c4020e3"
 
   url "https://github.com/foolgry/standup-reminder/releases/download/v#{version}/StandUpReminder.app.zip"
   name "StandUpReminder"
