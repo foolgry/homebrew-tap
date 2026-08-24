@@ -32,9 +32,14 @@ jobs:
           gh release download "$tag" --repo foolgry/dsh-desktop \
             --pattern '*-mac-arm64.dmg' --dir /tmp/dmg --clobber
           sha=$(shasum -a 256 /tmp/dmg/*-mac-arm64.dmg | cut -d' ' -f1)
+          # Rewrite the url with the release's real asset name — dsh-desktop
+          # renamed artifacts from "DSH.Desktop-*" to "DSH-Desktop-*" (spaces
+          # in artifact names break electron-updater downloads).
+          asset=$(basename /tmp/dmg/*-mac-arm64.dmg)
           sed -i \
             -e "s/^  version \".*\"/  version \"$version\"/" \
             -e "s/^  sha256 \".*\"/  sha256 \"$sha\"/" \
+            -e "s|releases/download/v#{version}/[^\"]*|releases/download/v#{version}/$asset|" \
             Casks/dsh-desktop.rb
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
