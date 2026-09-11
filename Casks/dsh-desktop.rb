@@ -1,8 +1,8 @@
 cask "dsh-desktop" do
-  version "0.1.5-rc.1.202609100528"
-  sha256 "cb9a75e1d170f2a0e1c86e98190c3801b61a9b6ad3d9f2b3eb005c75a1fad529"
+  version "0.1.5-rc.2.202609110529"
+  sha256 "4cce7d91f6ea72c595d9f7162b3ab9a948829d653405762a8dab8401e8956bf4"
 
-  url "https://github.com/foolgry/dsh-desktop/releases/download/v#{version}/DSH-Desktop-0.1.5-rc.1.202609100528-mac-arm64.dmg"
+  url "https://github.com/foolgry/dsh-desktop/releases/download/v#{version}/DSH-Desktop-0.1.5-rc.2.202609110529-mac-arm64.dmg"
   name "DSH Desktop"
   desc "Community-built desktop shell for DeepSeek Harness (dsh)"
   homepage "https://github.com/foolgry/dsh-desktop"
