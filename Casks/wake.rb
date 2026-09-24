@@ -13,7 +13,7 @@ cask "wake" do
   end
 
   # Release ships a universal binary (arm64 + x86_64); Info.plist requires 13.0.
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "Wake.app"
 
