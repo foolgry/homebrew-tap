@@ -1,0 +1,62 @@
+name: sync-wake-cask
+
+
+# Tracks iAmCorey/Wake releases and bumps Casks/wake.rb (version + sha256).
+# Uses this repo's own GITHUB_TOKEN, so no PAT secret is needed.
+
+on:
+  schedule:
+    # 14:00 Beijing time (06:00 UTC). Wake's macOS asset is normally published
+    # before noon Beijing (v0.8.1 landed 03:56 UTC), so one run a day is enough.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Bump cask to the latest Wake release
+        run: |
+          set -euo pipefail
+          tag=$(gh release view --repo iAmCorey/Wake --json tagName --jq .tagName)
+          version="${tag#v}"
+          if grep -q "^  version \"$version\"$" Casks/wake.rb; then
+            echo "already at $version, nothing to do"
+            exit 0
+          fi
+
+          # Read the real asset name instead of assuming it: if upstream renames
+          # the macOS artifact, the cask url has to follow.
+          asset=$(gh release view "$tag" --repo iAmCorey/Wake --json assets \
+            --jq '.assets[].name | select(test("-macos\\.zip$"))')
+          if [ -z "$asset" ]; then
+            echo "::error::no *-macos.zip asset in $tag"
+            exit 1
+          fi
+
+          gh release download "$tag" --repo iAmCorey/Wake \
+            --pattern "$asset" --dir /tmp/wake-asset --clobber
+          sha=$(shasum -a 256 "/tmp/wake-asset/$asset" | cut -d' ' -f1)
+          # Asset names carry the version ("Wake-0.8.1-macos.zip"); keep the url
+          # templated so the cask stays readable and self-consistent.
+          asset_tpl=$(printf '%s' "$asset" | sed "s/${version}/#{version}/")
+
+          sed -i \
+            -e "s/^  version \".*\"/  version \"$version\"/" \
+            -e "s/^  sha256 \".*\"/  sha256 \"$sha\"/" \
+            -e "s|releases/download/[^\"]*|releases/download/v#{version}/$asset_tpl|" \
+            Casks/wake.rb
+          grep -q "releases/download/v#{version}/$asset_tpl" Casks/wake.rb
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Casks/wake.rb
+          git commit -m "wake $version"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

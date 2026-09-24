@@ -75,4 +75,4 @@ wake-mcp setup          # 打印 Claude Code / Codex / Cursor 的接入片段
 brew upgrade --cask wake && xattr -dr com.apple.quarantine /Applications/Wake.app
 ```
 
-`Casks/wake.rb` 跟随 [Wake 的 Release](https://github.com/iAmCorey/Wake/releases) 手动更新版本与 sha256。
+`Casks/wake.rb` 由 `.github/workflows/sync-wake-cask.yml` 每天 14:00（北京时间）自动跟踪 [Wake 的 Release](https://github.com/iAmCorey/Wake/releases) 并更新版本与 sha256，无需手工维护；上游改了 macOS 打包文件名也能跟着改。
