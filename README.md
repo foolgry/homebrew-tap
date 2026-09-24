@@ -47,3 +47,32 @@ brew upgrade --cask standup-reminder
 ```
 
 `Casks/standup-reminder.rb` 跟随 [standup-reminder 的 Release](https://github.com/foolgry/standup-reminder/releases) 手动更新版本与 sha256。
+
+## [wake](https://github.com/iAmCorey/Wake)
+
+把所有 AI 编码代理（Claude Code、Codex、Cursor、Gemini CLI 等）的本地会话汇总到一处，浏览、全文搜索、一键恢复。Rust + GPUI，通用二进制（Apple Silicon / Intel），需 macOS 13+。
+
+```sh
+brew install --cask foolgry/tap/wake
+```
+
+未公证（ad-hoc 签名），首次打开如被 Gatekeeper 拦截：
+
+```sh
+xattr -dr com.apple.quarantine /Applications/Wake.app
+```
+
+命令行工具 `wake-cli`、`wake-mcp` 会一并链接到 `$(brew --prefix)/bin`，可直接给终端和 MCP 客户端调用：
+
+```sh
+wake-cli sessions --project "$PWD" --limit 5
+wake-mcp setup          # 打印 Claude Code / Codex / Cursor 的接入片段
+```
+
+更新：
+
+```sh
+brew upgrade --cask wake && xattr -dr com.apple.quarantine /Applications/Wake.app
+```
+
+`Casks/wake.rb` 跟随 [Wake 的 Release](https://github.com/iAmCorey/Wake/releases) 手动更新版本与 sha256。
