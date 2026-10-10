@@ -1,6 +1,6 @@
 cask "wake" do
-  version "0.8.8"
-  sha256 "86d8798c5182421c83ad48e7a91b24c95cf467ee60404520db566a2319fe37bc"
+  version "0.9.1"
+  sha256 "5fe60487040cd966d3a1d47d26b75eeb22f3f48d88349d2c51f925d8cc1ef0f8"
 
   url "https://github.com/iAmCorey/Wake/releases/download/v#{version}/Wake-#{version}-macos.zip"
   name "Wake"
